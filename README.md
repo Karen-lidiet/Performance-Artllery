@@ -3,7 +3,7 @@
 # How to Run
 1. Clone the Repository
 2. Go to the folder "Performance-Artllery"
-3. Export environment variable: export token=7e67bb602c7cc9cd70dcdd7a504058210264abaa
+3. Export environment variable: export TOKEN=7e67bb602c7cc9cd70dcdd7a504058210264abaa
 4. Install all dependencies: npm i
 
 # Run the test
