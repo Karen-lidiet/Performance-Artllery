@@ -1,0 +1,44 @@
+config:
+  target: "https://api.todoist.com"
+  processor: "../data/tasks.js"
+  phases:
+    - duration: 3
+      arrivalRate: 2
+      name: "Phase 1"
+    - duration: 2
+      arrivalRate: 2
+      name: "Phase 2"
+  defaults:
+    headers:
+      Authorization: Bearer {{ $processEnvironment.TOKEN }}
+      Content-type: application/json
+  ##processor "./myProcessor.js"
+scenarios:
+  - flow:
+      - function: taskContent
+      - get:
+          url: "/rest/v1/tasks"
+      - post:
+          url: "/rest/v1/tasks"
+          json:
+            content: "{{ content }}"
+          capture:
+            json: "$.id"
+            as: "id"
+      - log: "current content is {{ content }}"
+      - get:
+          url: "/rest/v1/tasks/{{ id }}"
+      - log: "current id is {{ id }}"
+      - post:
+          url: "/rest/v1/tasks/{{ id }}"
+          json:
+            content: "{{ updateContent }}"
+      - log: "updated content is {{ updateContent }}"
+      - post:
+          url: "/rest/v1/tasks/{{ id }}/close"
+      - post:
+          url: "/rest/v1/tasks/{{ id }}/reopen"
+      - delete:
+          url: "/rest/v1/tasks/{{ id }}"
+      
+            
